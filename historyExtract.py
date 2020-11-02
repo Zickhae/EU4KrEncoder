@@ -36,7 +36,7 @@ def main():
         if os.path.isdir(path):
             files = os.listdir(path)
             for file in files:
-                file_name, file_ext = os.path.splitext(file)
+                file_name, _ = os.path.splitext(file)
                 result += parse_data(category, file_name)
 
     f = open('parsedHistory.txt', 'w', encoding="utf-8")

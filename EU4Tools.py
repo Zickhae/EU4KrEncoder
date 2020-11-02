@@ -217,7 +217,7 @@ def escape_txt(is_unified):
                         f = open('./original/txt/%s/%s' % (category, filename), 'r', encoding='utf-8-sig')
                         text = f.read()
                         print(category, filename, 'utf-8-sig')
-                    except UnicodeDecodeError as e:
+                    except UnicodeDecodeError:
                         f = open('./original/txt/%s/%s' % (category, filename), 'r', encoding='ISO-8859-1')
                         text = f.read()
                         print(category, filename, 'iso-8859-1')
@@ -237,7 +237,7 @@ def escape_txt(is_unified):
                     try:
                         f = open('./original/txt/%s/%s' % (category, filename), 'r', encoding='utf-8-sig')
                         text = f.read()
-                    except UnicodeDecodeError as e:
+                    except UnicodeDecodeError:
                         f = open('./original/txt/%s/%s' % (category, filename), 'r', encoding='ISO-8859-1')
                         text = f.read()
                     extract_characters('txt', text)
@@ -361,11 +361,9 @@ def generate_bmfont(name, ext, source_file):
     yoffset_modifier = bmfc_option.get('yOffset', 0)
     yoffset_re = re.compile('yoffset=([-0-9]*)')
 
-    write_mode = False
     for line in lines:
         line = line.strip()
         if 'chars count=' in line:
-            write_mode = True
             chars_count = int(line.split('=')[1])
             chars_count += len(add_lines)
             line = 'chars count=' + str(chars_count)
@@ -496,9 +494,9 @@ def generate_fonts():
     for file in files:
         file_name, file_ext = os.path.splitext(file)
         if file_ext == ".bmfc":
-            generate_bmfont(file_name, file_ext, "ingame_source.txt");
+            generate_bmfont(file_name, file_ext, "ingame_source.txt")
         if file_ext == "._bmfc":
-            generate_bmfont(file_name, file_ext, "worldmap_source.txt");
+            generate_bmfont(file_name, file_ext, "worldmap_source.txt")
             bmfc_option = get_bmfc_option(file_name, file_ext)
             if bmfc_option['textureFormat'] != 'dds' or bmfc_option['textureCompression'] != 0:
                 print('Auto glow is only possible for uncompressed DDS.')
@@ -688,7 +686,7 @@ def migrate_pofile(fn):
         if len(tokens) != 2:
             f.write(line + '\n')
         else:
-            key, value = tokens
+            key, _ = tokens
             if key in parsed_podata:
                 f.write(' %s "%s"\n' % (key, parsed_podata[key]))
             else:
