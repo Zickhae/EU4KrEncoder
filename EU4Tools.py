@@ -53,7 +53,7 @@ errornous_characters = set()
 
 def convert_wide_text_to_escaped_wide_text(wide_text):
     result = bytearray()
-    # FIXME: add more special characters
+    # NOTE: compare to the original JP translator, additional escape characters are augmented including "]"
     special_chars = [0xA4, 0xA3, 0xA7, 0x24, 0x5B, 0x00, 0x5C, 0x20, 0x0D, 0x0A,
                      0x22, 0x7B, 0x7D, 0x40, 0x80, 0x7E, 0x2F, 0xBD, 0X3B, 0X5D,
                      0X5F, 0x3D, 0x23, 0x3F, 0x3A]
@@ -80,7 +80,7 @@ def convert_wide_text_to_escaped_wide_text(wide_text):
 
 def convert_wide_text_to_escaped_text(wide_text):
     result = bytearray()
-    # FIXME: add more special characters
+    # NOTE: compare to the original JP translator, additional escape characters are augmented including "]"
     special_chars = [0xA4, 0xA3, 0xA7, 0x24, 0x5B, 0x00, 0x5C, 0x20, 0x0D, 0x0A,
                      0x22, 0x7B, 0x7D, 0x40, 0x80, 0x7E, 0x2F, 0xBD, 0X3B, 0X5D,
                      0X5F, 0x3D, 0x23, 0x3F, 0x3A]
