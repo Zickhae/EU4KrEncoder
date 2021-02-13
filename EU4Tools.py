@@ -6,6 +6,7 @@ import subprocess
 import sys
 import re
 import unicodedata
+import openpyxl
 
 cp_map = {
     0x80: 0x20AC,
@@ -625,24 +626,22 @@ def unify_text_data(text_translate_data):
         f.write(data)
         f.close()
 
-
 def spreadsheet_to_data():
     print('read spreadsheets...')
-    # import openpyxl
-    # wb = openpyxl.load_workbook(filename='original.xlsx', data_only=True)
-    # sheets = wb.sheetnames
-    # text_translate_data = {}
-    # for sheet_name in sheets:
-    #     if '_l_english' in sheet_name:
-    #         print('Processing ' + sheet_name)
-    #         ws = wb[sheet_name]
-    #         worksheet_to_yml(sheet_name, ws)
-    #     if '_txt' in sheet_name:
-    #         print('Processing ' + sheet_name)
-    #         ws = wb[sheet_name]
-    #         load_text_worksheet(text_translate_data, sheet_name, ws)
+    wb = openpyxl.load_workbook(filename='original.xlsx', data_only=True)
+    sheets = wb.sheetnames
+    text_translate_data = {}
+    for sheet_name in sheets:
+        if '_l_english' in sheet_name:
+            print('Processing ' + sheet_name)
+            ws = wb[sheet_name]
+            worksheet_to_yml(sheet_name, ws)
+        if '_txt' in sheet_name:
+            print('Processing ' + sheet_name)
+            ws = wb[sheet_name]
+            load_text_worksheet(text_translate_data, sheet_name, ws)
     print('processing text datas...')
-    # unify_text_data(text_translate_data)
+    unify_text_data(text_translate_data)
     print('done.')
 
 def parse_podata(data):
